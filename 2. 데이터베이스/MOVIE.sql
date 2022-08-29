@@ -1,0 +1,902 @@
+--------------------------------------------------------
+--  파일이 생성됨 - 목요일-8월-25-2022   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table CINEMA
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."CINEMA" 
+   (	"CINEMA_NAME" VARCHAR2(20 BYTE), 
+	"TOTAL_NUMOFSEAT" NUMBER(2,0), 
+	"CINEMA_ID" VARCHAR2(20 BYTE), 
+	"REGION_ID" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."CINEMA"  IS '영화관의 상영관 목록';
+--------------------------------------------------------
+--  DDL for Table CUSTOMER
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."CUSTOMER" 
+   (	"CUSTOMER_ID" NUMBER(20,0), 
+	"CUSTOMER_NAME" VARCHAR2(50 BYTE), 
+	"MEMBERSHIP_ID" VARCHAR2(20 BYTE), 
+	"ID" VARCHAR2(20 BYTE), 
+	"PASSWORD" VARCHAR2(50 BYTE), 
+	"EMAIL" VARCHAR2(50 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."CUSTOMER"  IS '고객 목록';
+--------------------------------------------------------
+--  DDL for Table GENRE
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."GENRE" 
+   (	"GENRE_ID" VARCHAR2(20 BYTE), 
+	"GENRE_NAME" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."GENRE"  IS '영화 장르 목록';
+--------------------------------------------------------
+--  DDL for Table GRADE
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."GRADE" 
+   (	"GRADE_ID" NUMBER(20,0), 
+	"MOVIE_ID" NUMBER(20,0), 
+	"CUSTOMER_ID" NUMBER(20,0), 
+	"GRADE" NUMBER(20,1)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."GRADE"  IS '고객이 등록한 평점 목록';
+--------------------------------------------------------
+--  DDL for Table MEMBERSHIP
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."MEMBERSHIP" 
+   (	"DISCOUNT_RATE" NUMBER(20,0), 
+	"MEMBERSHIP_ID" VARCHAR2(20 BYTE), 
+	"MEMBERSHIP_NAME" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."MEMBERSHIP"  IS '고객의 멤버십 등급 목록';
+--------------------------------------------------------
+--  DDL for Table MOVIE
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."MOVIE" 
+   (	"MOVIE_ID" NUMBER(20,0), 
+	"MOVIE_NAME" VARCHAR2(40 BYTE), 
+	"GENRE1_ID" VARCHAR2(20 BYTE), 
+	"RUNNING_TIME" NUMBER(20,0), 
+	"ACTORS" VARCHAR2(200 BYTE), 
+	"OPENDATE" DATE, 
+	"SUMMARY" VARCHAR2(300 BYTE), 
+	"RATING_ID" VARCHAR2(20 BYTE), 
+	"COMPANY" VARCHAR2(40 BYTE), 
+	"DIRECTOR" VARCHAR2(20 BYTE), 
+	"AVG_GRADE" NUMBER(20,1), 
+	"GENRE2_ID" VARCHAR2(20 BYTE), 
+	"BOOKING_RATE" NUMBER(20,0) DEFAULT 0
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."MOVIE"  IS '영화 목록';
+--------------------------------------------------------
+--  DDL for Table MOVIEPRICE
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."MOVIEPRICE" 
+   (	"MOVIEPRICE_ID" VARCHAR2(20 BYTE), 
+	"MOVIEPRICE_NAME" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."MOVIEPRICE"  IS '영화의 종류에 따른 영화요금 목록';
+--------------------------------------------------------
+--  DDL for Table PAYMENT_METHOD
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."PAYMENT_METHOD" 
+   (	"PAYMENT_METHOD_ID" VARCHAR2(20 BYTE), 
+	"PAYMENT_METHOD_NAME" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."PAYMENT_METHOD"  IS '영화티켓 결제 방법 목록';
+--------------------------------------------------------
+--  DDL for Table PERSONPRICE
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."PERSONPRICE" 
+   (	"PERSONPRICE_ID" VARCHAR2(20 BYTE), 
+	"PERSONPRICE_NAME" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."PERSONPRICE"  IS '사람의 종류에 따른 영화요금 목록';
+--------------------------------------------------------
+--  DDL for Table PRICE
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."PRICE" 
+   (	"PRICE_ID" VARCHAR2(20 BYTE), 
+	"MOVIEPRICE_ID" VARCHAR2(20 BYTE), 
+	"PERSONPRICE_ID" VARCHAR2(20 BYTE), 
+	"PRICE_NUM" NUMBER(20,0)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."PRICE"  IS '영화요금 목록';
+--------------------------------------------------------
+--  DDL for Table RATING
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."RATING" 
+   (	"RATING_ID" VARCHAR2(20 BYTE), 
+	"RATING_NAME" VARCHAR2(50 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."RATING"  IS '영화상영등급 목록';
+--------------------------------------------------------
+--  DDL for Table SEAT
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."SEAT" 
+   (	"SEAT_ID" VARCHAR2(20 BYTE), 
+	"CINEMA_ID" VARCHAR2(20 BYTE), 
+	"SEAT_NAME" VARCHAR2(20 BYTE), 
+	"ROWW" NUMBER, 
+	"COL" NUMBER
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."SEAT"  IS '영화관의 상영관에 존재하는 좌석 목록';
+--------------------------------------------------------
+--  DDL for Table TICKET
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."TICKET" 
+   (	"TICKET_ID" NUMBER(20,0), 
+	"TIMETABLE_ID" NUMBER(20,0), 
+	"CUSTOMER_ID" NUMBER(20,0), 
+	"SEAT_ID" VARCHAR2(20 BYTE), 
+	"TICKET_DATE" DATE, 
+	"PRICE_ID" VARCHAR2(20 BYTE), 
+	"PAYMENT_METHOD_ID" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."TICKET"  IS '사용자가 예매한 영화티켓 목록';
+--------------------------------------------------------
+--  DDL for Table TIMETABLE
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."TIMETABLE" 
+   (	"TIMETABLE_ID" NUMBER(20,0), 
+	"START_TIME" TIMESTAMP (6), 
+	"END_TIME" TIMESTAMP (6), 
+	"CINEMA_ID" VARCHAR2(20 BYTE), 
+	"MOVIE_ID" NUMBER(20,0), 
+	"MOVIEPRICE_ID" VARCHAR2(20 BYTE)
+   ) ;
+
+   COMMENT ON TABLE "MOVIE"."TIMETABLE"  IS '영화시간표 목록';
+--------------------------------------------------------
+--  DDL for Table TIMETABLE_SEAT
+--------------------------------------------------------
+
+  CREATE TABLE "MOVIE"."TIMETABLE_SEAT" 
+   (	"TIMETABLE_SEAT_ID" NUMBER(20,0), 
+	"TIMETABLE_ID" VARCHAR2(20 BYTE), 
+	"SEAT_ID" VARCHAR2(20 BYTE), 
+	"SEAT_TRUE_FALSE" NUMBER(2,0) DEFAULT 1
+   ) ;
+REM INSERTING into MOVIE.CINEMA
+SET DEFINE OFF;
+Insert into MOVIE.CINEMA (CINEMA_NAME,TOTAL_NUMOFSEAT,CINEMA_ID,REGION_ID) values ('강남점 1관',50,'G01','GN');
+Insert into MOVIE.CINEMA (CINEMA_NAME,TOTAL_NUMOFSEAT,CINEMA_ID,REGION_ID) values ('강남점 2관',40,'G02','GN');
+Insert into MOVIE.CINEMA (CINEMA_NAME,TOTAL_NUMOFSEAT,CINEMA_ID,REGION_ID) values ('강남점 3관',30,'G03','GN');
+Insert into MOVIE.CINEMA (CINEMA_NAME,TOTAL_NUMOFSEAT,CINEMA_ID,REGION_ID) values ('논현점 1관',30,'N01','NH');
+Insert into MOVIE.CINEMA (CINEMA_NAME,TOTAL_NUMOFSEAT,CINEMA_ID,REGION_ID) values ('역삼점 1관',50,'Y01','YS');
+Insert into MOVIE.CINEMA (CINEMA_NAME,TOTAL_NUMOFSEAT,CINEMA_ID,REGION_ID) values ('역삼점 2관',40,'Y02','YS');
+REM INSERTING into MOVIE.CUSTOMER
+SET DEFINE OFF;
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (17,'24','GEN','24','24','24');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (2,'백재남','VIP','baek1','baek','baek1@gmail.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (1,'관리자','MANAGER','manager','pw','manager@gmail.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (4,'임대훈','VIP','lim1','limm','lim1@gmail.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (5,'안순희','VIP','an1','an','an1@gmail.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (6,'김데니','GEN','daniel','0000','dasds@dsaads.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (7,'김데니','GEN','daniel','0000','dasds@dsaads.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (8,'김데니','GEN','daniel','0000','dasds@dsaads.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (9,'김데니','GEN','daniel','0000','dasds@dsaads.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (10,'김데니','GEN','daniel','0000','dasds@dsaads.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (11,'김두렬','GEN','dannee2234','pw','dannee2234@naver.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (12,'fsd','GEN','ggfd','fdfsd','dssfsd@');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (18,'안지수','GEN','jisu1','jisu','jisu1@gmail.com');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (15,'dd','GEN','d','d','d');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (16,'김두렬','GEN','ddd','dddd','dskadj@dfsf');
+Insert into MOVIE.CUSTOMER (CUSTOMER_ID,CUSTOMER_NAME,MEMBERSHIP_ID,ID,PASSWORD,EMAIL) values (19,'hello','GEN','hello','hello','hello@gmail.com');
+REM INSERTING into MOVIE.GENRE
+SET DEFINE OFF;
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('AC','액션');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('DR','드라마');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('MY','미스터리');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('HO','호러');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('AN','애니메이션');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('AD','어드벤처');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('TH','스릴');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('CO','코미디');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('RO','로맨스');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('ME','멜로');
+Insert into MOVIE.GENRE (GENRE_ID,GENRE_NAME) values ('DO','다큐멘터리');
+REM INSERTING into MOVIE.GRADE
+SET DEFINE OFF;
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (13,3,1,7.3);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (21,10,15,6);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (15,1,18,8.5);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (17,4,2,9.2);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (16,11,18,6.5);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (19,3,19,9.5);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (18,2,2,8.5);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (20,3,15,10);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (1,1,1,8.8);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (2,2,1,9.2);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (3,3,2,6.8);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (4,4,3,5.5);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (5,5,4,7.7);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (6,6,5,9.1);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (7,7,3,6.6);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (8,8,2,5.5);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (9,9,4,7.7);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (10,10,3,8.9);
+Insert into MOVIE.GRADE (GRADE_ID,MOVIE_ID,CUSTOMER_ID,GRADE) values (11,11,1,5.8);
+REM INSERTING into MOVIE.MEMBERSHIP
+SET DEFINE OFF;
+Insert into MOVIE.MEMBERSHIP (DISCOUNT_RATE,MEMBERSHIP_ID,MEMBERSHIP_NAME) values (0,'GEN','일반');
+Insert into MOVIE.MEMBERSHIP (DISCOUNT_RATE,MEMBERSHIP_ID,MEMBERSHIP_NAME) values (5,'VIP','VIP');
+Insert into MOVIE.MEMBERSHIP (DISCOUNT_RATE,MEMBERSHIP_ID,MEMBERSHIP_NAME) values (0,'MANAGER','매니저');
+REM INSERTING into MOVIE.MOVIE
+SET DEFINE OFF;
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (11,'헤어질 결심','RO',138,'탕웨이, 박해일, 이정현, 박용우, 고경표, 김신영',to_date('2022/06/29','RRRR/MM/DD'),'진심을 숨기는 용의자 용의자에게 의심과 관심을 동시에 느끼는 형사 그들의 <헤어질 결심>','15','모호필름','박찬욱',6.2,'ME',0);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (1,'헌트','AC',125,'이정재, 정우성, 전혜진, 허성태, 고윤정, 김종수, 정만식',to_date('2022/08/10','RRRR/MM/DD'),'조직 내 숨어든 스파이를 색출하라! 사냥꾼’이 될 것인가, 사냥감이 될 것인가!','15','메가박스','이정재',8.7,'DR',7);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (2,'탑건-매버릭','AC',130,'톰 크루즈, 마일즈 텔러, 제니퍼 코넬리',to_date('2022/06/22','RRRR/MM/DD'),'한순간의 실수도 용납되지 않는 하늘 위, 가장 압도적인 비행이 시작된다!','12','파라마운트 픽쳐스','조셉 코신스키',8.9,null,3);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (3,'놉','MY',130,'다니엘 칼루야, 케케 파머, 스티븐 연, 마이클 원콧, 브랜든 페레아, 바비 페레이라 ',to_date('2022/08/17','RRRR/MM/DD'),'그것은 우리 위에 있다.거대하고, 주목받길 원하고, 미쳤다.나쁜 기적이라는 것도 있을까?','12','유티버셜 스튜디오','조던 필',8.4,'HO',2);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (10,'파로호','TH',100,'이중옥, 김대건, 김연교, 변중희, 공민정, 강말금',to_date('2022/08/18','RRRR/MM/DD'),'의심하고 지배하는 자, 의심받고 지배당하는 자... 진실을 삼켜버릴 히스테릭 심리 추격이 시작된다','15','
+한국영화아카데미','임상수',7.5,null,1);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (4,'한산-용의 출현','AC',130,'박해일, 변요한, 안성기, 손현주, 김성규, 김향기, 택연, 공명, 박지환, 조재윤',to_date('2022/07/27','RRRR/MM/DD'),'1592년 여름, 음력 7월 8일 한산도 앞바다, 압도적인 승리가 필요한 조선의 운명을 건 지상 최고의 해전이 펼쳐진다','12','롯데엔터테인먼트','김한민',7.4,'DR',1);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (9,'녹턴','DO',97,'은성호, 은건기, 손민서',to_date('2022/08/18','RRRR/MM/DD'),'자폐증이 있는 음악 청년 성호, 엄마는 성호의 재능을 살리기 위해 고군분투하지만 성호의 동생 건기는 자신을 뒷전에 두고 성호만 돌보는 엄마가 못마땅하다.','12','
+포이에티케','정관조',8,null,1);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (5,'DC 리그 오브 슈퍼-펫','AN',105,'드웨인 존슨, 케빈 하트, 키아누 리브스, 존 크랜신스키',to_date('2022/08/10','RRRR/MM/DD'),'슈퍼 히어로 지키는 슈퍼 펫 군단의 파워 댕댕 어드벤처가 온다!','0','워너 브라더스','자레드 스턴',7.1,'AC',2);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (8,'미니언즈2','AN',87,'스티브 카렐, 타라지 P. 헨슨, 양자경',to_date('2022/07/20','RRRR/MM/DD'),'올여름 극장가를 점령할 MCU(미니언즈 시네마틱 유니버스)가 돌아온다!','0','일루미네이션 엔터','카일 발다',5.5,'AD',1);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (6,'풀타임','DR',88,'로르 칼라미, 안 수아레즈, 제네비에브 음니히, 시릴 구에이',to_date('2022/08/18','RRRR/MM/DD'),'오늘도 지각 위기에 놓여 절박한 표정으로 파리 시내를 전력 질주하는 쥘리. 싱글맘의 전쟁 같은 삶에 과연 평화와 여유가 찾아올까?','0','슈아픽처스','에리크 그라벨',8.4,'TH',5);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (7,'비상선언','DR',141,'송강호, 이병헌, 전도연, 김남길, 임시완, 김소진, 박해준',to_date('2022/08/03','RRRR/MM/DD'),'‘비상선언’: 재난 상황에 직면한 항공기가 더 이상 정상적인 운항이 불가능하여, 무조건적인 착륙을 요청하는 비상사태를 뜻하는 항공 용어','12','매그넘나인','한재림',6.5,null,1);
+Insert into MOVIE.MOVIE (MOVIE_ID,MOVIE_NAME,GENRE1_ID,RUNNING_TIME,ACTORS,OPENDATE,SUMMARY,RATING_ID,COMPANY,DIRECTOR,AVG_GRADE,GENRE2_ID,BOOKING_RATE) values (12,'영화3','AN',132,'배우1, 배우2',to_date('2022/09/25','RRRR/MM/DD'),'요약요약','0','배급사5','감독1',0,'DR',0);
+REM INSERTING into MOVIE.MOVIEPRICE
+SET DEFINE OFF;
+Insert into MOVIE.MOVIEPRICE (MOVIEPRICE_ID,MOVIEPRICE_NAME) values ('2D_M','2D_조조');
+Insert into MOVIE.MOVIEPRICE (MOVIEPRICE_ID,MOVIEPRICE_NAME) values ('2D','2D_일반');
+Insert into MOVIE.MOVIEPRICE (MOVIEPRICE_ID,MOVIEPRICE_NAME) values ('4D','4D_일반');
+Insert into MOVIE.MOVIEPRICE (MOVIEPRICE_ID,MOVIEPRICE_NAME) values ('IM_M','IMAX_조조');
+Insert into MOVIE.MOVIEPRICE (MOVIEPRICE_ID,MOVIEPRICE_NAME) values ('IM','IMAX_일반');
+REM INSERTING into MOVIE.PAYMENT_METHOD
+SET DEFINE OFF;
+Insert into MOVIE.PAYMENT_METHOD (PAYMENT_METHOD_ID,PAYMENT_METHOD_NAME) values ('CARD','카드');
+Insert into MOVIE.PAYMENT_METHOD (PAYMENT_METHOD_ID,PAYMENT_METHOD_NAME) values ('CASH','현금');
+Insert into MOVIE.PAYMENT_METHOD (PAYMENT_METHOD_ID,PAYMENT_METHOD_NAME) values ('PHONE','휴대폰');
+REM INSERTING into MOVIE.PERSONPRICE
+SET DEFINE OFF;
+Insert into MOVIE.PERSONPRICE (PERSONPRICE_ID,PERSONPRICE_NAME) values ('NO','일반');
+Insert into MOVIE.PERSONPRICE (PERSONPRICE_ID,PERSONPRICE_NAME) values ('AD','청소년');
+Insert into MOVIE.PERSONPRICE (PERSONPRICE_ID,PERSONPRICE_NAME) values ('SE','노인');
+Insert into MOVIE.PERSONPRICE (PERSONPRICE_ID,PERSONPRICE_NAME) values ('SP','우대');
+REM INSERTING into MOVIE.PRICE
+SET DEFINE OFF;
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('IM_NO','IM','NO',20000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('IM_AD','IM','AD',15000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_M_NO','2D_M','NO',11000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_M_AD','2D_M','AD',8000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_M_SE','2D_M','SE',7000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_M_SP','2D_M','SP',5000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_NO','2D','NO',15000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_AD','2D','AD',12000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_SE','2D','SE',7000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('2D_SP','2D','SP',5000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('4D_NO','4D','NO',20000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('4D_AD','4D','AD',13000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('4D_SE','4D','SE',12000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('4D_SP','4D','SP',10000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('IM_M_NO','IM_M','NO',15000);
+Insert into MOVIE.PRICE (PRICE_ID,MOVIEPRICE_ID,PERSONPRICE_ID,PRICE_NUM) values ('IM_M_AD','IM_M','AD',13000);
+REM INSERTING into MOVIE.RATING
+SET DEFINE OFF;
+Insert into MOVIE.RATING (RATING_ID,RATING_NAME) values ('0','전체관람가');
+Insert into MOVIE.RATING (RATING_ID,RATING_NAME) values ('12','12세 이상 관람가');
+Insert into MOVIE.RATING (RATING_ID,RATING_NAME) values ('15','15세 이상 관람가');
+Insert into MOVIE.RATING (RATING_ID,RATING_NAME) values ('18','청소년 관람불가');
+REM INSERTING into MOVIE.SEAT
+SET DEFINE OFF;
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A1','G01','A-1',1,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A1','G02','A-1',1,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A1','G03','A-1',1,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A1','Y01','A-1',1,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A1','Y02','A-1',1,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A1','N01','A-1',1,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B1','G01','B-1',2,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C1','G01','C-1',3,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D1','G01','D-1',4,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E1','G01','E-1',5,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B1','Y01','B-1',2,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C1','Y01','C-1',3,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D1','Y01','D-1',4,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E1','Y01','E-1',5,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B1','Y02','B-1',2,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C1','Y02','C-1',3,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D1','Y02','D-1',4,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B1','G02','B-1',2,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C1','G02','C-1',3,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D1','G02','D-1',4,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B1','G03','B-1',2,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C1','G03','C-1',3,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B1','N01','B-1',2,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C1','N01','C-1',3,1);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A2','G01','A-2',1,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A3','G01','A-3',1,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A4','G01','A-4',1,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A5','G01','A-5',1,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A6','G01','A-6',1,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A7','G01','A-7',1,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A8','G01','A-8',1,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A9','G01','A-9',1,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_A10','G01','A-10',1,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B10','G01','B-10',2,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B2','G01','B-2',2,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B3','G01','B-3',2,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B4','G01','B-4',2,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B5','G01','B-5',2,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B6','G01','B-6',2,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B7','G01','B-7',2,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B8','G01','B-8',2,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_B9','G01','B-9',2,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C2','G01','C-2',3,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C3','G01','C-3',3,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C4','G01','C-4',3,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C5','G01','C-5',3,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C6','G01','C-6',3,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C7','G01','C-7',3,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C8','G01','C-8',3,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C9','G01','C-9',3,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_C10','G01','C-10',3,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D2','G01','D-2',4,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D3','G01','D-3',4,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D4','G01','D-4',4,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D5','G01','D-5',4,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D6','G01','D-6',4,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D7','G01','D-7',4,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D8','G01','D-8',4,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D9','G01','D-9',4,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_D10','G01','D-10',4,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E2','G01','E-2',5,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E3','G01','E-3',5,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E4','G01','E-4',5,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E5','G01','E-5',5,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E6','G01','E-6',5,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E7','G01','E-7',5,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E8','G01','E-8',5,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E9','G01','E-9',5,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G01_E10','G01','E-10',5,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D2','G02','D-2',4,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D3','G02','D-3',4,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D4','G02','D-4',4,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D5','G02','D-5',4,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D6','G02','D-6',4,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D7','G02','D-7',4,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D8','G02','D-8',4,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D9','G02','D-9',4,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_D10','G02','D-10',4,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C2','G02','C-2',3,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C3','G02','C-3',3,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C4','G02','C-4',3,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C5','G02','C-5',3,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C6','G02','C-6',3,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C7','G02','C-7',3,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C8','G02','C-8',3,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C9','G02','C-9',3,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_C10','G02','C-10',3,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B2','G02','B-2',2,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B3','G02','B-3',2,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B4','G02','B-4',2,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B5','G02','B-5',2,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B6','G02','B-6',2,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B7','G02','B-7',2,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B8','G02','B-8',2,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B9','G02','B-9',2,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_B10','G02','B-10',2,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A2','G02','A-2',1,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A3','G02','A-3',1,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A4','G02','A-4',1,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A5','G02','A-5',1,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A6','G02','A-6',1,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A7','G02','A-7',1,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A8','G02','A-8',1,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A9','G02','A-9',1,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G02_A10','G02','A-10',1,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A3','G03','A-3',1,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A2','N01','A-2',1,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A3','N01','A-3',1,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A4','N01','A-4',1,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A5','N01','A-5',1,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A6','N01','A-6',1,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A7','N01','A-7',1,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A8','N01','A-8',1,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A9','N01','A-9',1,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_A10','N01','A-10',1,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A2','Y01','A-2',1,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A3','Y01','A-3',1,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A4','Y01','A-4',1,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A5','Y01','A-5',1,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A6','Y01','A-6',1,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A7','Y01','A-7',1,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A8','Y01','A-8',1,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A9','Y01','A-9',1,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_A10','Y01','A-10',1,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A2','Y02','A-2',1,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A3','Y02','A-3',1,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A4','Y02','A-4',1,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A5','Y02','A-5',1,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A6','Y02','A-6',1,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A7','Y02','A-7',1,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A8','Y02','A-8',1,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A9','Y02','A-9',1,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_A10','Y02','A-10',1,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B2','Y02','B-2',2,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B3','Y02','B-3',2,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B4','Y02','B-4',2,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B5','Y02','B-5',2,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B6','Y02','B-6',2,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B7','Y02','B-7',2,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B8','Y02','B-8',2,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B9','Y02','B-9',2,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_B10','Y02','B-10',2,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B2','Y01','B-2',2,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B3','Y01','B-3',2,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B4','Y01','B-4',2,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B5','Y01','B-5',2,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B6','Y01','B-6',2,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B7','Y01','B-7',2,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B8','Y01','B-8',2,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B9','Y01','B-9',2,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_B10','Y01','B-10',2,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B2','N01','B-2',2,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B3','N01','B-3',2,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B4','N01','B-4',2,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B5','N01','B-5',2,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B6','N01','B-6',2,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B7','N01','B-7',2,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B8','N01','B-8',2,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B9','N01','B-9',2,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_B10','N01','B-10',2,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B2','G03','B-2',2,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B3','G03','B-3',2,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B4','G03','B-4',2,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B5','G03','B-5',2,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B6','G03','B-6',2,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B7','G03','B-7',2,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B8','G03','B-8',2,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B9','G03','B-9',2,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_B10','G03','B-10',2,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C2','G03','C-2',3,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C3','G03','C-3',3,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C4','G03','C-4',3,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C5','G03','C-5',3,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C6','G03','C-6',3,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C7','G03','C-7',3,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C8','G03','C-8',3,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C9','G03','C-9',3,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_C10','G03','C-10',3,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C2','N01','C-2',3,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C3','N01','C-3',3,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C4','N01','C-4',3,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C5','N01','C-5',3,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C6','N01','C-6',3,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C7','N01','C-7',3,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C8','N01','C-8',3,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C9','N01','C-9',3,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('N01_C10','N01','C-10',3,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C2','Y01','C-2',3,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C3','Y01','C-3',3,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C4','Y01','C-4',3,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C5','Y01','C-5',3,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C6','Y01','C-6',3,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C7','Y01','C-7',3,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C8','Y01','C-8',3,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C9','Y01','C-9',3,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_C10','Y01','C-10',3,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C2','Y02','C-2',3,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C3','Y02','C-3',3,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C4','Y02','C-4',3,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C5','Y02','C-5',3,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C6','Y02','C-6',3,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C7','Y02','C-7',3,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C8','Y02','C-8',3,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C9','Y02','C-9',3,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_C10','Y02','C-10',3,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D2','Y02','D-2',4,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D3','Y02','D-3',4,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D4','Y02','D-4',4,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D5','Y02','D-5',4,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D6','Y02','D-6',4,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D7','Y02','D-7',4,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D8','Y02','D-8',4,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D9','Y02','D-9',4,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y02_D10','Y02','D-10',4,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D2','Y01','D-2',4,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D3','Y01','D-3',4,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D4','Y01','D-4',4,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D5','Y01','D-5',4,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D6','Y01','D-6',4,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D7','Y01','D-7',4,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D8','Y01','D-8',4,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D9','Y01','D-9',4,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_D10','Y01','D-10',4,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E2','Y01','E-2',5,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E3','Y01','E-3',5,3);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E4','Y01','E-4',5,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E5','Y01','E-5',5,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E6','Y01','E-6',5,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E7','Y01','E-7',5,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E8','Y01','E-8',5,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E9','Y01','E-9',5,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('Y01_E10','Y01','E-10',5,10);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A2','G03','A-2',1,2);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A4','G03','A-4',1,4);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A5','G03','A-5',1,5);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A6','G03','A-6',1,6);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A7','G03','A-7',1,7);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A8','G03','A-8',1,8);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A9','G03','A-9',1,9);
+Insert into MOVIE.SEAT (SEAT_ID,CINEMA_ID,SEAT_NAME,ROWW,COL) values ('G03_A10','G03','A-10',1,10);
+REM INSERTING into MOVIE.TICKET
+SET DEFINE OFF;
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (4,4,2,'G02_D1',to_date('2022/08/24','RRRR/MM/DD'),'IM_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (26,7,2,'N01_B2',to_date('2022/08/25','RRRR/MM/DD'),'2D_AD','CASH');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (22,2,2,'G01_E1',to_date('2022/08/24','RRRR/MM/DD'),'2D_NO','PHONE');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (20,7,2,'N01_A1',to_date('2022/08/24','RRRR/MM/DD'),'2D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (28,10,19,'G03_A1',to_date('2022/08/25','RRRR/MM/DD'),'4D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (17,2,2,'G01_B1',to_date('2022/08/24','RRRR/MM/DD'),'2D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (18,2,2,'G01_C1',to_date('2022/08/24','RRRR/MM/DD'),'2D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (19,2,2,'G01_D1',to_date('2022/08/24','RRRR/MM/DD'),'2D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (24,13,18,'G01_A10',to_date('2022/08/25','RRRR/MM/DD'),'2D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (27,15,2,'G03_C1',to_date('2022/08/25','RRRR/MM/DD'),'4D_NO','PHONE');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (25,7,2,'N01_B1',to_date('2022/08/25','RRRR/MM/DD'),'2D_NO','CASH');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (29,15,19,'G03_A1',to_date('2022/08/25','RRRR/MM/DD'),'4D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (1,2,1,'G01_A1',to_date('2022/08/19','RRRR/MM/DD'),'2D_SP','CASH');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (3,3,2,'G02_C1',to_date('2022/08/21','RRRR/MM/DD'),'2D_M_SE','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (5,5,2,'Y01_A1',to_date('2022/08/22','RRRR/MM/DD'),'2D_SE','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (6,7,3,'Y02_D1',to_date('2022/08/25','RRRR/MM/DD'),'2D_AD','CASH');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (7,7,3,'N01_C1',to_date('2022/08/25','RRRR/MM/DD'),'2D_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (8,11,3,'G03_B1',to_date('2022/08/21','RRRR/MM/DD'),'4D_SP','PHONE');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (9,12,4,'Y01_E1',to_date('2022/08/20','RRRR/MM/DD'),'2D_AD','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (10,9,4,'N01_B1',to_date('2022/08/20','RRRR/MM/DD'),'4D_SP','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (11,6,4,'Y02_C1',to_date('2022/08/22','RRRR/MM/DD'),'2D_M_NO','CARD');
+Insert into MOVIE.TICKET (TICKET_ID,TIMETABLE_ID,CUSTOMER_ID,SEAT_ID,TICKET_DATE,PRICE_ID,PAYMENT_METHOD_ID) values (12,3,5,'G02_B1',to_date('2022/08/20','RRRR/MM/DD'),'2D_M_SE','CASH');
+REM INSERTING into MOVIE.TIMETABLE
+SET DEFINE OFF;
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (1,to_timestamp('22/08/20 12:15:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/20 14:43:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'N01',11,'2D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (2,to_timestamp('22/08/19 21:25:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/19 23:40:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G01',1,'2D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (3,to_timestamp('22/08/21 09:05:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/21 11:25:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G03',3,'2D_M');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (10,to_timestamp('22/08/26 17:50:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/26 20:10:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G03',2,'4D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (4,to_timestamp('22/08/24 11:00:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/24 12:45:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'Y02',5,'IM');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (5,to_timestamp('22/08/22 19:30:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/22 21:20:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'Y01',10,'2D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (9,to_timestamp('22/08/22 19:25:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/22 21:02:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'N01',9,'4D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (6,to_timestamp('22/08/23 09:20:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/23 11:40:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G02',4,'2D_M');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (7,to_timestamp('22/08/25 12:50:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/25 14:28:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'N01',6,'2D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (11,to_timestamp('22/08/22 15:25:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/22 17:52:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G03',8,'4D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (8,to_timestamp('22/08/21 10:20:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/21 12:40:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G01',3,'IM_M');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (12,to_timestamp('22/08/21 11:45:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/21 14:16:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'Y01',7,'2D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (13,to_timestamp('22/08/26 12:00:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/26 13:20:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G01',5,'2D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (14,to_timestamp('22/09/05 11:00:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/09/05 12:30:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'N01',11,'2D');
+Insert into MOVIE.TIMETABLE (TIMETABLE_ID,START_TIME,END_TIME,CINEMA_ID,MOVIE_ID,MOVIEPRICE_ID) values (15,to_timestamp('22/08/30 12:30:00.000000000','RR/MM/DD HH24:MI:SSXFF'),to_timestamp('22/08/30 14:50:00.000000000','RR/MM/DD HH24:MI:SSXFF'),'G03',2,'4D');
+REM INSERTING into MOVIE.TIMETABLE_SEAT
+SET DEFINE OFF;
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (21,'10','G03_A1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (1,'2','G01_B1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (2,'2','G01_D1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (3,'2','G01_C1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (4,'2','G01_A1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (5,'2','G01_E1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (6,'3','G02_B1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (7,'3','G02_C1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (8,'4','G02_D1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (9,'5','Y01_A1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (10,'6','Y02_C1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (11,'7','N01_B1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (12,'7','N01_A1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (13,'7','N01_B2',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (14,'7','N01_C1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (15,'7','Y02_D1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (16,'9','N01_B1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (17,'11','G03_B1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (18,'12','Y01_E1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (19,'13','G01_A10',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (20,'15','G03_C1',1);
+Insert into MOVIE.TIMETABLE_SEAT (TIMETABLE_SEAT_ID,TIMETABLE_ID,SEAT_ID,SEAT_TRUE_FALSE) values (22,'15','G03_A1',1);
+--------------------------------------------------------
+--  DDL for Index CUSTOMER_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."CUSTOMER_PK" ON "MOVIE"."CUSTOMER" ("CUSTOMER_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index GENRE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."GENRE_PK" ON "MOVIE"."GENRE" ("GENRE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index GRADE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."GRADE_PK" ON "MOVIE"."GRADE" ("GRADE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index MEMBERSHIP_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."MEMBERSHIP_PK" ON "MOVIE"."MEMBERSHIP" ("MEMBERSHIP_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index MOVIE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."MOVIE_PK" ON "MOVIE"."MOVIE" ("MOVIE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index PAYMENT_METHOD_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."PAYMENT_METHOD_PK" ON "MOVIE"."PAYMENT_METHOD" ("PAYMENT_METHOD_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index PERSON_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."PERSON_PK" ON "MOVIE"."PERSONPRICE" ("PERSONPRICE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index PRICE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."PRICE_PK" ON "MOVIE"."PRICE" ("PRICE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index RATING_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."RATING_PK" ON "MOVIE"."RATING" ("RATING_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index SEAT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."SEAT_PK" ON "MOVIE"."SEAT" ("SEAT_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index SYS_C007085
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."SYS_C007085" ON "MOVIE"."CINEMA" ("CINEMA_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TICKET_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TICKET_PK" ON "MOVIE"."TICKET" ("TICKET_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TIMEPRICE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TIMEPRICE_PK" ON "MOVIE"."MOVIEPRICE" ("MOVIEPRICE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TIMETABLE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TIMETABLE_PK" ON "MOVIE"."TIMETABLE" ("TIMETABLE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TIMETABLE_SEAT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TIMETABLE_SEAT_PK" ON "MOVIE"."TIMETABLE_SEAT" ("TIMETABLE_SEAT_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index SYS_C007085
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."SYS_C007085" ON "MOVIE"."CINEMA" ("CINEMA_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index CUSTOMER_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."CUSTOMER_PK" ON "MOVIE"."CUSTOMER" ("CUSTOMER_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index GENRE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."GENRE_PK" ON "MOVIE"."GENRE" ("GENRE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index GRADE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."GRADE_PK" ON "MOVIE"."GRADE" ("GRADE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index MEMBERSHIP_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."MEMBERSHIP_PK" ON "MOVIE"."MEMBERSHIP" ("MEMBERSHIP_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index MOVIE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."MOVIE_PK" ON "MOVIE"."MOVIE" ("MOVIE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TIMEPRICE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TIMEPRICE_PK" ON "MOVIE"."MOVIEPRICE" ("MOVIEPRICE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index PAYMENT_METHOD_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."PAYMENT_METHOD_PK" ON "MOVIE"."PAYMENT_METHOD" ("PAYMENT_METHOD_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index PERSON_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."PERSON_PK" ON "MOVIE"."PERSONPRICE" ("PERSONPRICE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index PRICE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."PRICE_PK" ON "MOVIE"."PRICE" ("PRICE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index RATING_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."RATING_PK" ON "MOVIE"."RATING" ("RATING_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index SEAT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."SEAT_PK" ON "MOVIE"."SEAT" ("SEAT_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TICKET_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TICKET_PK" ON "MOVIE"."TICKET" ("TICKET_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TIMETABLE_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TIMETABLE_PK" ON "MOVIE"."TIMETABLE" ("TIMETABLE_ID") 
+  ;
+--------------------------------------------------------
+--  DDL for Index TIMETABLE_SEAT_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "MOVIE"."TIMETABLE_SEAT_PK" ON "MOVIE"."TIMETABLE_SEAT" ("TIMETABLE_SEAT_ID") 
+  ;
+--------------------------------------------------------
+--  Constraints for Table CINEMA
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."CINEMA" ADD CONSTRAINT "SYS_C007085" PRIMARY KEY ("CINEMA_ID") ENABLE;
+  ALTER TABLE "MOVIE"."CINEMA" MODIFY ("CINEMA_ID" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."CINEMA" MODIFY ("TOTAL_NUMOFSEAT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table CUSTOMER
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."CUSTOMER" ADD CONSTRAINT "CUSTOMER_PK" PRIMARY KEY ("CUSTOMER_ID") ENABLE;
+  ALTER TABLE "MOVIE"."CUSTOMER" MODIFY ("PASSWORD" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."CUSTOMER" MODIFY ("CUSTOMER_ID" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."CUSTOMER" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."CUSTOMER" MODIFY ("MEMBERSHIP_ID" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."CUSTOMER" MODIFY ("CUSTOMER_NAME" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table GENRE
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."GENRE" ADD CONSTRAINT "GENRE_PK" PRIMARY KEY ("GENRE_ID") ENABLE;
+  ALTER TABLE "MOVIE"."GENRE" MODIFY ("GENRE_NAME" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."GENRE" MODIFY ("GENRE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table GRADE
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."GRADE" ADD CONSTRAINT "GRADE_PK" PRIMARY KEY ("GRADE_ID") ENABLE;
+  ALTER TABLE "MOVIE"."GRADE" MODIFY ("MOVIE_ID" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."GRADE" MODIFY ("GRADE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table MEMBERSHIP
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."MEMBERSHIP" ADD CONSTRAINT "MEMBERSHIP_PK" PRIMARY KEY ("MEMBERSHIP_ID") ENABLE;
+  ALTER TABLE "MOVIE"."MEMBERSHIP" MODIFY ("MEMBERSHIP_NAME" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."MEMBERSHIP" MODIFY ("DISCOUNT_RATE" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."MEMBERSHIP" MODIFY ("MEMBERSHIP_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table MOVIE
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."MOVIE" ADD CONSTRAINT "MOVIE_PK" PRIMARY KEY ("MOVIE_ID") ENABLE;
+  ALTER TABLE "MOVIE"."MOVIE" MODIFY ("RUNNING_TIME" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."MOVIE" MODIFY ("MOVIE_NAME" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."MOVIE" MODIFY ("MOVIE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table MOVIEPRICE
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."MOVIEPRICE" ADD CONSTRAINT "TIMEPRICE_PK" PRIMARY KEY ("MOVIEPRICE_ID") ENABLE;
+  ALTER TABLE "MOVIE"."MOVIEPRICE" MODIFY ("MOVIEPRICE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table PAYMENT_METHOD
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."PAYMENT_METHOD" ADD CONSTRAINT "PAYMENT_METHOD_PK" PRIMARY KEY ("PAYMENT_METHOD_ID") ENABLE;
+  ALTER TABLE "MOVIE"."PAYMENT_METHOD" MODIFY ("PAYMENT_METHOD_NAME" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."PAYMENT_METHOD" MODIFY ("PAYMENT_METHOD_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table PERSONPRICE
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."PERSONPRICE" ADD CONSTRAINT "PERSON_PK" PRIMARY KEY ("PERSONPRICE_ID") ENABLE;
+  ALTER TABLE "MOVIE"."PERSONPRICE" MODIFY ("PERSONPRICE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table PRICE
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."PRICE" ADD CONSTRAINT "PRICE_PK" PRIMARY KEY ("PRICE_ID") ENABLE;
+  ALTER TABLE "MOVIE"."PRICE" MODIFY ("PRICE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table RATING
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."RATING" ADD CONSTRAINT "RATING_PK" PRIMARY KEY ("RATING_ID") ENABLE;
+  ALTER TABLE "MOVIE"."RATING" MODIFY ("RATING_NAME" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."RATING" MODIFY ("RATING_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table SEAT
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."SEAT" ADD CONSTRAINT "SEAT_PK" PRIMARY KEY ("SEAT_ID") ENABLE;
+  ALTER TABLE "MOVIE"."SEAT" MODIFY ("CINEMA_ID" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."SEAT" MODIFY ("SEAT_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table TICKET
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."TICKET" MODIFY ("SEAT_ID" NOT NULL ENABLE);
+  ALTER TABLE "MOVIE"."TICKET" ADD CONSTRAINT "TICKET_PK" PRIMARY KEY ("TICKET_ID") ENABLE;
+  ALTER TABLE "MOVIE"."TICKET" MODIFY ("TICKET_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table TIMETABLE
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."TIMETABLE" ADD CONSTRAINT "TIMETABLE_PK" PRIMARY KEY ("TIMETABLE_ID") ENABLE;
+  ALTER TABLE "MOVIE"."TIMETABLE" MODIFY ("TIMETABLE_ID" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table TIMETABLE_SEAT
+--------------------------------------------------------
+
+  ALTER TABLE "MOVIE"."TIMETABLE_SEAT" ADD CONSTRAINT "TIMETABLE_SEAT_PK" PRIMARY KEY ("TIMETABLE_SEAT_ID") ENABLE;
+  ALTER TABLE "MOVIE"."TIMETABLE_SEAT" MODIFY ("TIMETABLE_SEAT_ID" NOT NULL ENABLE);
